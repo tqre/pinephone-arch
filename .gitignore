@@ -1,7 +1,4 @@
 src/*
 pkg/*
-*.bin
+p-boot/*
 *.tar.*
-*.argb
-p-boot-conf
-
