@@ -3,6 +3,9 @@
 
 # Maintainer: Tuomo Kuure <tqre@far.fi>
 
+# NOTE: This PKGBUILD assumes bootloader partition to reside at /dev/mmcblkXp1
+# If your partitioning differs, this might render your phone unbootable
+
 pkgname=linux-megous
 pkgver=5.14
 pkgrel=1
@@ -26,10 +29,13 @@ sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
             'SKIP'
             'SKIP')
 
+# Get boot partition name from mounted root, assume partition 1 is boot
+_boot=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
+
 check() {
-    echo "check commands"
+    echo "Boot: ${_boot}"
 }
 
 package() {
-    echo "package commands"
+    echo "Package"
 }
