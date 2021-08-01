@@ -1,0 +1,21 @@
+# Optimized Linux kernel for Pinephone 1.2 and Arch Linux ARM
+# Creator: Ondřej Jirman (Megous)
+
+# Maintainer: Tuomo Kuure <tqre@far.fi>
+
+pkgname=linux-megous
+pkgver=5.14
+pkgrel=1
+pkgdesc='Linux kernel - optimized for Pinephone'
+arch=('aarch64')
+license=('GPL')
+url='https://megous.com/git/linux'
+source=('https://xff.cz/kernels/${pkgver}/pp.tar.gz')
+
+check() {
+    echo "check commands"
+}
+
+package() {
+    echo "package commands"
+}
