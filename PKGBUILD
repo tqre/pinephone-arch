@@ -16,19 +16,28 @@ url='https://megous.com/git'
 source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
         "git+https://megous.com/git/p-boot"
         "boot.conf"
-        "pp.hook")
+        "10-pp-initramfs.hook"
+        "11-p-boot-update.hook"
+        "12-p-boot-binary-update.hook")
 
 sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
             'SKIP'
             'SKIP'
+            'SKIP'
+            'SKIP'
             'SKIP')
 
-# Get boot partition name from mounted root, assume partition 1 is boot
-_boot=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
-
+# Assuming boot partition is on the root device as partition 1
+_bootpart=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
+_bootdev=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/..$//')
 
 check() {
-    echo "Boot: ${_boot}"
+    echo "  -> Detected device path as ${_bootdev}"
+    echo "  -> Detected boot partition as ${_bootpart}"
+    echo "  If these are NOT correct, press Ctrl-C to abort. These variables are written to pacman hooks which"
+    echo "  are executed upon package install. You'll probably break something if they are not correct."
+    echo ""
+    read -p "Otherwise, press enter to continue."
 }
 
 package() {
@@ -43,7 +52,7 @@ package() {
     cd "${srcdir}/p-boot/dist"
     install -Dm644 fw.bin "${pkgdir}/p-boot/fw.bin"
     install -Dm644 p-boot.bin "${pkgdir}/p-boot/p-boot.bin"
-    install -Dm644 p-boot-conf "${pkgdir}/p-boot/p-boot-conf"
+    install -Dm744 p-boot-conf "${pkgdir}/p-boot/p-boot-conf"
 
     cd "${srcdir}/p-boot/example/files"
     install -Dm644 off.argb "${pkgdir}/p-boot/files/off.argb"
@@ -60,6 +69,16 @@ package() {
 
     # Install pacman hook with right kernel version for initramfs creation
     cd "${srcdir}"
-    sed -i "s/KERNELVERSION/${_kernver}/" pp.hook
-    install -Dm644 pp.hook "${pkgdir}/etc/pacman.d/hooks/pp.hook"
+    sed -i "s/KERNELVERSION/${_kernver}/" 10-pp-initramfs.hook
+    install -Dm644 10-pp-initramfs.hook "${pkgdir}/etc/pacman.d/hooks/10-pp-initramfs.hook"
+
+    # Install pacman hook for p-boot bootloader spceial filesystem update
+    cd "${srcdir}"
+    sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
+    install -Dm644 11-p-boot-update.hook "${pkgdir}/etc/pacman.d/hooks/11-p-boot-update.hook"
+
+    # Install pacman hook for p-boot binary update to boot device
+    cd "${srcdir}"
+    sed -i "s#BOOTDEV#${_bootdev}#" 12-p-boot-binary-update.hook
+    install -Dm644 12-p-boot-binary-update.hook "${pkgdir}/etc/pacman.d/hooks/12-p-boot-binary-update.hook"
 }

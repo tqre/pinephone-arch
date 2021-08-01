@@ -1,0 +1,11 @@
+[Trigger]
+Operation   = Install
+Operation   = Upgrade
+Type        = Package
+Target      = linux-megous
+
+[Action]
+Description = Update boot partition with p-boot required filesystem
+When        = PostTransaction
+Exec        = /p-boot/p-boot-conf /p-boot BOOTPART
+

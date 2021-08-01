@@ -1,0 +1,11 @@
+[Trigger]
+Operation   = Install
+Operation   = Upgrade
+Type        = Package
+Target      = linux-megous
+
+[Action]
+Description = Put p-boot.bin into the start of the boot device
+When        = PostTransaction
+Exec        = /usr/bin/dd if=/p-boot/p-boot.bin of=BOOTDEV bs=1024 seek=8
+
