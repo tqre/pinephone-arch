@@ -24,10 +24,29 @@ sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
 # Get boot partition name from mounted root, assume partition 1 is boot
 _boot=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
 
+# Get kernel version
+
 check() {
     echo "Boot: ${_boot}"
 }
 
 package() {
-    echo "Package"
+    # Install files needed for p-boot
+    cd "${srcdir}"
+    install -Dm644 boot.conf "${pkgdir}/p-boot/boot.conf"
+
+    cd "${srcdir}/pp-${pkgver}"
+    install -Dm644 Image "${pkgdir}/p-boot/Image"
+    install -Dm644 board-1.2.dtb "${pkgdir}/p-boot/board-1.2.dtb"
+    
+    cd "${srcdir}/p-boot/dist"
+    install -Dm644 fw.bin "${pkgdir}/p-boot/fw.bin"
+    install -Dm644 p-boot.bin "${pkgdir}/p-boot/p-boot.bin"
+    install -Dm644 p-boot-conf "${pkgdir}/p-boot/p-boot-conf"
+
+    cd "${srcdir}/p-boot/example/files"
+    install -Dm644 off.argb "${pkgdir}/p-boot/files/off.argb"
+    install -Dm644 pboot2.argb "${pkgdir}/p-boot/files/pboot2.argb"
+
+    # Install kernel modules
 }
