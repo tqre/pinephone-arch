@@ -10,7 +10,7 @@ All bootloader related files are installed to /p-boot -directory.
 
 ## How to use:
 On your Pinephone with Arch Linux ARM:
-- install git and base-devel
+- install git, base-devel and f2fs-tools
 - git clone this repo
 - cd to repo and run makepkg
 - use pacman -U to install the package
