@@ -14,18 +14,10 @@ arch=('aarch64')
 license=('GPL')
 url='https://megous.com/git'
 source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
+        "git+https://megous.com/git/p-boot"
         "boot.conf"
-        "https://megous.com/git/p-boot/tree/dist/fw.bin"
-        "https://megous.com/git/p-boot/tree/dist/p-boot-conf"
-        "https://megous.com/git/p-boot/tree/dist/p-boot.bin"
-        "https://megous.com/git/p-boot/tree/example/files/off.argb"
-        "https://megous.com/git/p-boot/tree/example/files/pboot2.argb")
 
 sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
-            'SKIP'
-            'SKIP'
-            'SKIP'
-            'SKIP'
             'SKIP'
             'SKIP')
 
