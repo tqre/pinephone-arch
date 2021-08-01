@@ -1,2 +1,7 @@
 src/*
-pp.tar.gz
+pkg/*
+*.bin
+*.tar.*
+*.argb
+p-boot-conf
+
