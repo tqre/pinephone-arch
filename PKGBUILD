@@ -15,9 +15,11 @@ license=('GPL')
 url='https://megous.com/git'
 source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
         "git+https://megous.com/git/p-boot"
-        "boot.conf")
+        "boot.conf"
+        "pp.hook")
 
 sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
+            'SKIP'
             'SKIP'
             'SKIP')
 
@@ -53,9 +55,11 @@ package() {
     for file in *; do
         if [[ -L $file ]]; then rm $file; fi
     done
-    mkdir -p ${pkgdir}/lib/modules/${_kernver}
-    cp -R * ${pkgdir}/lib/modules/${_kernver}
+    mkdir -p ${pkgdir}/usr/lib/modules/${_kernver}
+    cp -R * ${pkgdir}/usr/lib/modules/${_kernver}
 
-    # Generate new initramfs
-
+    # Install pacman hook with right kernel version for initramfs creation
+    cd "${srcdir}"
+    sed -i "s/KERNELVERSION/${_kernver}/" pp.hook
+    install -Dm644 pp.hook "${pkgdir}/etc/pacman.d/hooks/pp.hook"
 }

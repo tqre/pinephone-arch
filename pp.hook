@@ -1,0 +1,10 @@
+[Trigger]
+Operation   = Install
+Operation   = Upgrade
+Type        = Package
+Target      = linux-megous
+
+[Action]
+Description = Generate initramfs for p-boot
+When        = PostTransaction
+Exec        = /usr/bin/mkinitcpio --generate /p-boot/initramfs.img --kernel KERNELVERSION
