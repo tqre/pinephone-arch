@@ -24,7 +24,6 @@ sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
 # Get boot partition name from mounted root, assume partition 1 is boot
 _boot=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
 
-# Get kernel version
 
 check() {
     echo "Boot: ${_boot}"
@@ -48,5 +47,15 @@ package() {
     install -Dm644 off.argb "${pkgdir}/p-boot/files/off.argb"
     install -Dm644 pboot2.argb "${pkgdir}/p-boot/files/pboot2.argb"
 
-    # Install kernel modules
+    # Install modules without symlinks
+    _kernver=$(ls ${srcdir}/pp-${pkgver}/modules/lib/modules)
+    cd "${srcdir}/pp-${pkgver}/modules/lib/modules/${_kernver}"
+    for file in *; do
+        if [[ -L $file ]]; then rm $file; fi
+    done
+    mkdir -p ${pkgdir}/lib/modules/${_kernver}
+    cp -R * ${pkgdir}/lib/modules/${_kernver}
+
+    # Generate new initramfs
+
 }
