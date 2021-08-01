@@ -10,7 +10,7 @@ pkgdesc='Linux kernel - optimized for Pinephone'
 arch=('aarch64')
 license=('GPL')
 url='https://megous.com/git/linux'
-source=('https://xff.cz/kernels/${pkgver}/pp.tar.gz')
+source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz")
 
 check() {
     echo "check commands"
