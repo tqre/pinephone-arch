@@ -15,7 +15,7 @@ license=('GPL')
 url='https://megous.com/git'
 source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
         "git+https://megous.com/git/p-boot"
-        "boot.conf"
+        "boot.conf")
 
 sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
             'SKIP'
