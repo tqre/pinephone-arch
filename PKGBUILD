@@ -50,7 +50,7 @@ package() {
     # Install files needed for p-boot
     cd "${srcdir}"
     sed -i "s#ROOTPART#${_rootpart}#" boot.conf
-    sed -i "s/FSTYPE/${_fstype}#" boot.conf
+    sed -i "s/FSTYPE/${_fstype}/" boot.conf
     install -Dm644 boot.conf "${pkgdir}/p-boot/boot.conf"
 
     cd "${srcdir}/pp-${pkgver}"
