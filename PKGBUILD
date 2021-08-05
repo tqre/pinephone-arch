@@ -94,5 +94,5 @@ package() {
     cd "${srcdir}"
     sed -i "s#ROOTPART#${_rootpart}#" fstab
     sed -i "s/FSTYPE/${_fstype}/" fstab
-    install -Dm644 fstab "{pkgdir}/etc/fstab"    
+    install -Dm644 fstab "${pkgdir}/etc/fstab"    
 }
