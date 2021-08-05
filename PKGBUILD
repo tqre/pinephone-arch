@@ -34,7 +34,7 @@ sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
 _bootdev=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/..$//')
 _rootpart=$(mount | grep 'on / ' | awk '{ print $1 }')
 _bootpart=$(mount | grep 'on / ' | awk '{ print $1 }' | sed 's/.$/1/')
-_fstype=$(mount | grep 'on / ' | awk '{ print $5 })
+_fstype=$(mount | grep 'on / ' | awk '{ print $5 }')
 
 check() {
     echo "  -> Detected block device path as ${_bootdev}"
@@ -91,7 +91,7 @@ package() {
     install -Dm644 12-p-boot-binary-update.hook "${pkgdir}/etc/pacman.d/hooks/12-p-boot-binary-update.hook"
 
     # Write a new fstab file and install it
-    cd "${srcdir}
+    cd "${srcdir}"
     sed -i "s#ROOTPART#${_rootpart}#" fstab
     sed -i "s/FSTYPE/${_fstype}/" fstab
     install -Dm644 fstab "{pkgdir}/etc/fstab"    
