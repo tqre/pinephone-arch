@@ -85,7 +85,7 @@ package() {
     # Install script and pacman hook for script to reformat boot partition - make room for p-boot.bin
     sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
     install -Dm644 11-setup-boot-partition.hook "${pkgdir}/etc/pacman.d/hooks/11-setup-boot-partition.hook"
-    install -Dm744 setup_boot_partitions.sh "${pkgdir}/p-boot/setup_boot_partitions.sh"
+    install -Dm744 setup_boot_partition.sh "${pkgdir}/p-boot/setup_boot_partition.sh"
 
     # Install pacman hook which runs p-boot-conf for boot partition
     sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook

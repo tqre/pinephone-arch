@@ -7,5 +7,5 @@ Target      = linux-megous
 [Action]
 Description = Set up boot partitions
 When        = PostTransaction
-Exec        = /p-boot/setup_boot_partitions.sh
+Exec        = /p-boot/setup_boot_partition.sh
 
