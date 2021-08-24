@@ -1,0 +1,11 @@
+[Trigger]
+Operation   = Install
+Operation   = Upgrade
+Type        = Package
+Target      = linux-megous
+
+[Action]
+Description = Set up boot partitions
+When        = PostTransaction
+Exec        = /p-boot/setup_boot_partitions.sh
+

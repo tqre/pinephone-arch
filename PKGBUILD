@@ -18,10 +18,12 @@ source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
         "boot.conf"
         "fstab"
         "10-pp-initramfs.hook"
-        "11-p-boot-update.hook"
-        "12-p-boot-binary-update.hook")
+        "11-setup-boot-partition.hook"
+        "12-p-boot-update.hook"
+        "13-p-boot-binary-update.hook")
 
 sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
+            'SKIP'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -80,13 +82,18 @@ package() {
     sed -i "s/KERNELVERSION/${_kernver}/" 10-pp-initramfs.hook
     install -Dm644 10-pp-initramfs.hook "${pkgdir}/etc/pacman.d/hooks/10-pp-initramfs.hook"
 
-    # Install pacman hook for p-boot bootloader spceial filesystem update
+    # Install script and pacman hook for script to reformat boot partition - make room for p-boot.bin
     sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
-    install -Dm644 11-p-boot-update.hook "${pkgdir}/etc/pacman.d/hooks/11-p-boot-update.hook"
+    install -Dm644 11-setup-boot-partition.hook "${pkgdir}/etc/pacman.d/hooks/11-setup-boot-partition.hook"
+    install -Dm744 setup_boot_partitions.sh "${pkgdir}/p-boot/setup_boot_partitions.sh"
+
+    # Install pacman hook which runs p-boot-conf for boot partition
+    sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
+    install -Dm644 12-p-boot-update.hook "${pkgdir}/etc/pacman.d/hooks/12-p-boot-update.hook"
 
     # Install pacman hook for p-boot binary update to boot device
     sed -i "s#BOOTDEV#${_bootdev}#" 12-p-boot-binary-update.hook
-    install -Dm644 12-p-boot-binary-update.hook "${pkgdir}/etc/pacman.d/hooks/12-p-boot-binary-update.hook"
+    install -Dm644 13-p-boot-binary-update.hook "${pkgdir}/etc/pacman.d/hooks/13-p-boot-binary-update.hook"
 
     # Write a new fstab file and install it
     sed -i "s#ROOTPART#${_rootpart}#" fstab
