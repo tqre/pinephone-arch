@@ -5,7 +5,7 @@ Type        = Package
 Target      = linux-megous
 
 [Action]
-Description = Set up boot partitions
+Description = Set up boot partitions for p-boot
 When        = PostTransaction
-Exec        = /p-boot/setup_boot_partition.sh
+Exec        = /usr/bin/parted BOOTDEV rm 1 mkpart primary fat16 4MiB 64MiB
 

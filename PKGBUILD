@@ -83,9 +83,8 @@ package() {
     install -Dm644 10-pp-initramfs.hook "${pkgdir}/etc/pacman.d/hooks/10-pp-initramfs.hook"
 
     # Install script and pacman hook for script to reformat boot partition - make room for p-boot.bin
-    sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
+    sed -i "s#BOOTDEV#${_bootdev}#" 11-setup-boot-partition.hook
     install -Dm644 11-setup-boot-partition.hook "${pkgdir}/etc/pacman.d/hooks/11-setup-boot-partition.hook"
-    install -Dm744 setup_boot_partition.sh "${pkgdir}/p-boot/setup_boot_partition.sh"
 
     # Install pacman hook which runs p-boot-conf for boot partition
     sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
@@ -100,3 +99,4 @@ package() {
     sed -i "s/FSTYPE/${_fstype}/" fstab
     install -Dm644 fstab "${pkgdir}/etc/fstab"    
 }
+
