@@ -22,7 +22,7 @@ source=("https://xff.cz/kernels/${pkgver}/pp.tar.gz"
         "12-p-boot-update.hook"
         "13-p-boot-binary-update.hook")
 
-sha256sums=('0d37851a3f6e8cc35c00e771c9147ba854d3cc3f06ba2bda07427bb849872c23'
+sha256sums=('2d7fc026ae9b6816bbbce6dc3a2c606b023009649b0cf30937fd249fd9cbe68b'
             'SKIP'
             'SKIP'
             'SKIP'
@@ -87,11 +87,11 @@ package() {
     install -Dm644 11-setup-boot-partition.hook "${pkgdir}/etc/pacman.d/hooks/11-setup-boot-partition.hook"
 
     # Install pacman hook which runs p-boot-conf for boot partition
-    sed -i "s#BOOTPART#${_bootpart}#" 11-p-boot-update.hook
+    sed -i "s#BOOTPART#${_bootpart}#" 12-p-boot-update.hook
     install -Dm644 12-p-boot-update.hook "${pkgdir}/etc/pacman.d/hooks/12-p-boot-update.hook"
 
     # Install pacman hook for p-boot binary update to boot device
-    sed -i "s#BOOTDEV#${_bootdev}#" 12-p-boot-binary-update.hook
+    sed -i "s#BOOTDEV#${_bootdev}#" 13-p-boot-binary-update.hook
     install -Dm644 13-p-boot-binary-update.hook "${pkgdir}/etc/pacman.d/hooks/13-p-boot-binary-update.hook"
 
     # Write a new fstab file and install it
@@ -99,4 +99,3 @@ package() {
     sed -i "s/FSTYPE/${_fstype}/" fstab
     install -Dm644 fstab "${pkgdir}/etc/fstab"    
 }
-
