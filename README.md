@@ -12,7 +12,7 @@ TODO: pacman configs to avoid kernel updates form danctnix tree
 
 All bootloader related files are installed to /p-boot -directory, which are read with the pacman hooks upon installation.  
 
-**Use with care** - The PKGBUILD comes with pacman hooks that overwrite your boot partition! Use plain `makepkg` to building the package.
+**Use with care** - The PKGBUILD comes with pacman hooks that overwrite your boot partition! Use plain `makepkg` to build the package.
 
 ## How to use:
 On your Pinephone with Arch Linux ARM:
