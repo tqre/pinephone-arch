@@ -7,13 +7,12 @@
 - can be used with with danctnix's Arch Linux ARM with Phosh GUI
   - https://github.com/dreemurrs-embedded/Pine64-Arch
 
-TODO: LTE Modem (EG25) needs some tuning with danctnix build, as megous' kernel uses modem power manager driver
-- https://xnux.eu/devices/feature/modem-pp.html  
-
+TODO: LTE Modem (EG25) needs some tuning with danctnix build, as megous' kernel uses modem power manager driver: https://xnux.eu/devices/feature/modem-pp.html  
 TODO: pacman configs to avoid kernel updates form danctnix tree
 
-All bootloader related files are installed to /p-boot -directory, which are read with the pacman hooks upon installation.
-**Use with care** - The PKGBUILD comes with pacman hooks that overwrite your boot partition! Use plain 'makepkg' to building the package is safe.
+All bootloader related files are installed to /p-boot -directory, which are read with the pacman hooks upon installation.  
+
+**Use with care** - The PKGBUILD comes with pacman hooks that overwrite your boot partition! Use plain `makepkg` to building the package.
 
 ## How to use:
 On your Pinephone with Arch Linux ARM:
@@ -29,7 +28,7 @@ On your Pinephone with Arch Linux ARM:
 - https://xff.cz/kernels
 - https://archlinuxarm.org/platforms/armv8/allwinner/pine64
 
-## Output from installation
+## Example output from installation
 ```
 [alarm@alarm pinephone-arch]$ sudo pacman -U linux-megous-5.14-1-aarch64.pkg.tar.xz --overwrite /etc/fstab
 loading packages...
